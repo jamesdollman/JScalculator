@@ -3,6 +3,7 @@
 * {
     font-family: 'Bitter', serif;
     color:white;
+    font-size:26px;
     
 }
 
@@ -27,7 +28,7 @@ body {
 }
 
 .calculatorLabel {
-    border:1px solid white;
+    margin-top:10px;
     height:fit-content;
     width:fit-content;
 }
@@ -52,10 +53,11 @@ body {
     
 }
 
-.one, .two, .three, .four, .five, .six, .seven, .eight, .nine{
-    border:1px solid white;
-    width: 130px;
+.numberContainer button {
+    width:130px;
     height:80px;
+    background-color:transparent;
+    border-radius:10px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -63,5 +65,4 @@ body {
     margin-left:20px;
     margin-right:20px;
 }
-
 
