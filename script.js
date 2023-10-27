@@ -3,12 +3,14 @@ const equalsButton = document.querySelector('#equals');
 const result = document.querySelector('#result');
 const deleteButton = document.querySelector('#delete');
 const operatorButton = document.querySelectorAll('.operator');
+const backspaceButton = document.querySelector('#backspace');
 let output = '';
 let value = [];
 let i = 0;
 let j = 0;
 let answer = [];
 let initChoice = [''];
+let testStore = [];
 let clickedAnswer = false;
 
 initialize();
@@ -18,10 +20,12 @@ function initialize(){
             if(clickedAnswer === true){
                 result.textContent = '';
                 value[i] = (value[i] || '') + button.textContent;
+                output += testStore[i];
                 result.textContent += button.textContent;
                 clickedAnswer = false;
             }else {
                 value[i] = (value[i] || '') + button.textContent;
+                output += button.textContent;
                 result.textContent += button.textContent;
             }
         
@@ -30,6 +34,7 @@ function initialize(){
 
     operatorButton.forEach(operatorButton => {
         operatorButton.addEventListener("click", () => {
+            output += ' ' + operatorButton.textContent + ' ';
             result.textContent += ' ' + operatorButton.textContent + ' ';
             initChoice[i] = operatorButton.textContent;
             operatorCheck();
@@ -54,6 +59,24 @@ function initialize(){
         }
     })
 
+    backspaceButton.addEventListener('click', () => {
+        if (value[i] !== undefined) {
+            const currentNumber = value[i].toString();
+            if (currentNumber.length > 1) {
+                value[i] = parseFloat(currentNumber.slice(0, -1));
+            } else {
+                value.pop();
+                i--;
+            }
+            output = output.slice(0, -1);
+            result.textContent = result.textContent.slice(0, -1);
+            if (output.charAt(output.length - 1) === ' ') {
+                output = output.slice(0, -3);
+                result.textContent = result.textContent.slice(0, -3);
+                i--; 
+            }
+        }
+    });
 
 
     deleteButton.addEventListener('click', () => {
@@ -86,6 +109,7 @@ function resetting() {
     value = [];
     answer = [];
     initChoice = [];
+    output = '';
     i = 0;
     j = 0;
     
