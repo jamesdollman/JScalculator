@@ -9,14 +9,22 @@ let i = 0;
 let j = 0;
 let answer = [];
 let initChoice = [''];
-
+let clickedAnswer = false;
 
 initialize();
 function initialize(){
     buttons.forEach(button => {
         button.addEventListener("click", () => {
-        value[i] = (value[i] || '') + button.textContent;
-        result.textContent += button.textContent;
+            if(clickedAnswer === true){
+                result.textContent = '';
+                value[i] = (value[i] || '') + button.textContent;
+                result.textContent += button.textContent;
+                clickedAnswer = false;
+            }else {
+                value[i] = (value[i] || '') + button.textContent;
+                result.textContent += button.textContent;
+            }
+        
     });
 });
 
@@ -38,6 +46,7 @@ function initialize(){
     equalsButton.addEventListener('click', () => {
         operatorCheck();
         result.textContent = parseFloat(answer[j-1]);
+        clickedAnswer = true;
     })
 
 
