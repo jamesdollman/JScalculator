@@ -64,6 +64,10 @@ body {
     height: 50px; /* Adjust the height to your desired button size */
 }
 
+.numberContainer button:active {
+    transform:scale(.98);
+}
+
 #delete {
     width:200px;
     border-radius:25px;
