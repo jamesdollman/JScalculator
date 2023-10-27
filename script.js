@@ -25,12 +25,6 @@ function initialize(){
         operatorButton.addEventListener("click", () => {
             result.textContent += ' ' + operatorButton.textContent + ' ';
             initChoice[i] = operatorButton.textContent;
-            if(initChoice[i-1] === undefined){
-                console.log("wait fatty");
-            }else {
-                console.log(initChoice[i-1]);
-            }
-            
             operatorCheck();
             if(result.textContent === ''){
                 result.textContent = initChoice[i] + ' ';
@@ -43,7 +37,8 @@ function initialize(){
     })
 
     equalsButton.addEventListener('click', () => {
-        result.textContent = 'Answer: ';
+        operatorCheck();
+        result.textContent = 'Answer: ' + answer[j-1];
     })
 
 
@@ -95,9 +90,9 @@ function multiply(){
             answer[j] = answer[j-1] * value[i];
         }
         answer[j] = answer[j].toFixed(3)
-        console.log(answer[j]);
+        console.log(parseFloat(answer[j]));
         result.textContent = '';
-        testResult.textContent = answer[j];
+        testResult.textContent = parseFloat(answer[j]);
         j++;
     }
 }
@@ -114,9 +109,10 @@ function add() {
             answer[j] = parseFloat(answer[j-1]) + parseFloat(value[i]);
         }
         answer[j] = answer[j].toFixed(3)
+
         console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = answer[j];
+        testResult.textContent = parseFloat(answer[j]);
         j++;
     }
 }
@@ -135,7 +131,7 @@ function subtract() {
         answer[j] = answer[j].toFixed(3)
         console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = answer[j];
+        testResult.textContent = parseFloat(answer[j]);
         j++;
     }
 }
@@ -155,7 +151,7 @@ function divide(){
         answer[j] = answer[j].toFixed(3)
         console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = answer[j];
+        testResult.textContent = parseFloat(answer[j]);
         j++;
     }
 }
