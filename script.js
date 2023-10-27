@@ -130,15 +130,21 @@ function divide(){
     if(value[i] === undefined || value[i-1] === undefined){
         return;
     }else{
-        if(answer[j-1] === undefined){ 
-            answer[j] = parseFloat(value[i-1]) / parseFloat(value[i]);
-            
+        if(value[i] == 0 || value[i-1] == 0){
+            value=[];
+            return;
         }else {
-            answer[j] = parseFloat(answer[j-1]) / parseFloat(value[i]);
+            if(answer[j-1] === undefined){ 
+                answer[j] = parseFloat(value[i-1]) / parseFloat(value[i]);
+                
+            }else {
+                answer[j] = parseFloat(answer[j-1]) / parseFloat(value[i]);
+            }
+            answer[j] = answer[j].toFixed(3)
+            result.textContent = '';
+            result.textContent = parseFloat(answer[j])+ ' ' + initChoice[i] + ' ';
+            j++;
         }
-        answer[j] = answer[j].toFixed(3)
-        result.textContent = '';
-        result.textContent = parseFloat(answer[j])+ ' ' + initChoice[i] + ' ';
-        j++;
+        
     }
 }
