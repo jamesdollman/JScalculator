@@ -3,7 +3,6 @@ const equalsButton = document.querySelector('#equals');
 const result = document.querySelector('#result');
 const deleteButton = document.querySelector('#delete');
 const operatorButton = document.querySelectorAll('.operator');
-const testResult = document.querySelector('#prelimResult');
 let output = '';
 let value = [];
 let i = 0;
@@ -15,7 +14,7 @@ let initChoice = [''];
 initialize();
 function initialize(){
     buttons.forEach(button => {
-    button.addEventListener("click", () => {
+        button.addEventListener("click", () => {
         value[i] = (value[i] || '') + button.textContent;
         result.textContent += button.textContent;
     });
@@ -38,20 +37,15 @@ function initialize(){
 
     equalsButton.addEventListener('click', () => {
         operatorCheck();
-        result.textContent = 'Answer: ' + answer[j-1];
+        result.textContent = parseFloat(answer[j-1]);
     })
 
 
 
     deleteButton.addEventListener('click', () => {
-        for(let j = 0; j < value.length; j++){
-            console.log(value[j]);
-        }
-        value = [];
-        answer = [];
-        i = 0;
+        resetting();
         result.textContent = '';
-        testResult.textContent = '';
+        result.textContent = '';
     })
 
     
@@ -76,12 +70,16 @@ function operatorCheck() {
 }
 
 function resetting() {
+    value = [];
+    answer = [];
+    initChoice = [];
+    i = 0;
+    j = 0;
+    
 }
 
 function multiply(){
     if(value[i] === undefined || value[i-1] === undefined){
-        console.log("not yet");
-        console.log(value[i] + ' and ' + value[i-1]);
         return;
     }else{
         if(answer[j-1] === undefined){ 
@@ -90,17 +88,14 @@ function multiply(){
             answer[j] = answer[j-1] * value[i];
         }
         answer[j] = answer[j].toFixed(3)
-        console.log(parseFloat(answer[j]));
         result.textContent = '';
-        testResult.textContent = parseFloat(answer[j]);
+        result.textContent = parseFloat(answer[j])+ ' ' + initChoice[i] + ' ';
         j++;
     }
 }
 
 function add() {
     if(value[i] === undefined || value[i-1] === undefined){
-        console.log("not yet");
-        console.log(value[i] + ' and ' + value[i-1]);
         return;
     }else{
         if(answer[j-1] === undefined){ 
@@ -109,18 +104,14 @@ function add() {
             answer[j] = parseFloat(answer[j-1]) + parseFloat(value[i]);
         }
         answer[j] = answer[j].toFixed(3)
-
-        console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = parseFloat(answer[j]);
+        result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
         j++;
     }
 }
 
 function subtract() {
     if(value[i] === undefined || value[i-1] === undefined){
-        console.log("not yet");
-        console.log(value[i] + ' and ' + value[i-1]);
         return;
     }else{
         if(answer[j-1] === undefined){ 
@@ -129,17 +120,14 @@ function subtract() {
             answer[j] = parseFloat(answer[j-1]) - parseFloat(value[i]);
         }
         answer[j] = answer[j].toFixed(3)
-        console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = parseFloat(answer[j]);
+        result.textContent = parseFloat(answer[j])+ ' ' + initChoice[i] + ' ';
         j++;
     }
 }
 
 function divide(){
     if(value[i] === undefined || value[i-1] === undefined){
-        console.log("not yet");
-        console.log(value[i] + ' and ' + value[i-1]);
         return;
     }else{
         if(answer[j-1] === undefined){ 
@@ -149,9 +137,8 @@ function divide(){
             answer[j] = parseFloat(answer[j-1]) / parseFloat(value[i]);
         }
         answer[j] = answer[j].toFixed(3)
-        console.log(answer[j]);
         result.textContent = '';
-        testResult.textContent = parseFloat(answer[j]);
+        result.textContent = parseFloat(answer[j])+ ' ' + initChoice[i] + ' ';
         j++;
     }
 }
