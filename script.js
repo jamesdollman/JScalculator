@@ -3,93 +3,159 @@ const equalsButton = document.querySelector('#equals');
 const result = document.querySelector('#result');
 const deleteButton = document.querySelector('#delete');
 const operatorButton = document.querySelectorAll('.operator');
+const testResult = document.querySelector('#prelimResult');
 let output = '';
-let input = [];
+let value = [];
 let i = 0;
-let answer = 0;
-let operator;
-let initChoice = '';
-let operatorArray = [''];
+let j = 0;
+let answer = [];
+let initChoice = [''];
+
+
 initialize();
-
-
 function initialize(){
-    result.textContent = output;
     buttons.forEach(button => {
     button.addEventListener("click", () => {
-        output += button.textContent;
-        input[i] = (input[i] || '') + button.textContent;
-        result.textContent = output;
+        value[i] = (value[i] || '') + button.textContent;
+        result.textContent += button.textContent;
     });
 });
 
     operatorButton.forEach(operatorButton => {
         operatorButton.addEventListener("click", () => {
+            result.textContent += ' ' + operatorButton.textContent + ' ';
+            initChoice[i] = operatorButton.textContent;
+            if(initChoice[i-1] === undefined){
+                console.log("wait fatty");
+            }else {
+                console.log(initChoice[i-1]);
+            }
+            
             operatorCheck();
-            operator = operatorButton.textContent;
-            output += operator;
-            console.log("Pressed " + operatorButton.textContent);
-            initChoice = operatorButton.textContent;
+            if(result.textContent === ''){
+                result.textContent = initChoice[i] + ' ';
+            }
+            if(value[i] === undefined){
+                result.textContent = '';
+            }
             i++;
         })
     })
 
+    equalsButton.addEventListener('click', () => {
+        result.textContent = 'Answer: ';
+    })
+
+
+
     deleteButton.addEventListener('click', () => {
-        console.log("Delete!");
-        output = '';
-        i--;
-        input = [];
+        for(let j = 0; j < value.length; j++){
+            console.log(value[j]);
+        }
+        value = [];
+        answer = [];
+        i = 0;
         result.textContent = '';
+        testResult.textContent = '';
     })
 
     
 }
 
-function operatorCheck() {
-    console.log("INITIAL CHOICE IS: "+initChoice);
-    if(input[1] === undefined){
-        console.log("You dont have two numbers yet");
-    }else {
-        console.log("You have now stored two numbers, being: " + 
-        input[0] + " and " + input[1]);
-        if(initChoice === '*'){
+function operatorCheck() {   
+
+     switch(initChoice[i-1]) {
+        case '*':
             multiply();
-            resetting();
-        }else if(initChoice === '+'){
+            break;
+        case '+':
             add();
-            resetting();
-        }else if(initChoice === '-'){
+            break;
+        case '-':
             subtract();
-            resetting();
-        }else if(initChoice === '/'){
+            break;
+        case '/':
             divide();
-            resetting();
-        }
-    }
-    
+            break;
+     }
 }
 
 function resetting() {
-    result.textContent = '';
-    input = [];
-    i = -1;
-    output = '';
 }
 
 function multiply(){
-    console.log("Multiply!");
-    answer = input[0] * input[1];
-    console.log(answer);
+    if(value[i] === undefined || value[i-1] === undefined){
+        console.log("not yet");
+        console.log(value[i] + ' and ' + value[i-1]);
+        return;
+    }else{
+        if(answer[j-1] === undefined){ 
+            answer[j] = value[i-1] * value[i];
+        }else {
+            answer[j] = answer[j-1] * value[i];
+        }
+        answer[j] = answer[j].toFixed(3)
+        console.log(answer[j]);
+        result.textContent = '';
+        testResult.textContent = answer[j];
+        j++;
+    }
 }
 
 function add() {
-    console.log("Add!");
+    if(value[i] === undefined || value[i-1] === undefined){
+        console.log("not yet");
+        console.log(value[i] + ' and ' + value[i-1]);
+        return;
+    }else{
+        if(answer[j-1] === undefined){ 
+            answer[j] = parseFloat(value[i-1]) + parseFloat(value[i]);
+        }else {
+            answer[j] = parseFloat(answer[j-1]) + parseFloat(value[i]);
+        }
+        answer[j] = answer[j].toFixed(3)
+        console.log(answer[j]);
+        result.textContent = '';
+        testResult.textContent = answer[j];
+        j++;
+    }
 }
 
 function subtract() {
-    console.log("Subtract!");
+    if(value[i] === undefined || value[i-1] === undefined){
+        console.log("not yet");
+        console.log(value[i] + ' and ' + value[i-1]);
+        return;
+    }else{
+        if(answer[j-1] === undefined){ 
+            answer[j] = parseFloat(value[i-1]) - parseFloat(value[i]);
+        }else {
+            answer[j] = parseFloat(answer[j-1]) - parseFloat(value[i]);
+        }
+        answer[j] = answer[j].toFixed(3)
+        console.log(answer[j]);
+        result.textContent = '';
+        testResult.textContent = answer[j];
+        j++;
+    }
 }
 
 function divide(){
-    console.log("Divide!");
+    if(value[i] === undefined || value[i-1] === undefined){
+        console.log("not yet");
+        console.log(value[i] + ' and ' + value[i-1]);
+        return;
+    }else{
+        if(answer[j-1] === undefined){ 
+            answer[j] = parseFloat(value[i-1]) / parseFloat(value[i]);
+            
+        }else {
+            answer[j] = parseFloat(answer[j-1]) / parseFloat(value[i]);
+        }
+        answer[j] = answer[j].toFixed(3)
+        console.log(answer[j]);
+        result.textContent = '';
+        testResult.textContent = answer[j];
+        j++;
+    }
 }
