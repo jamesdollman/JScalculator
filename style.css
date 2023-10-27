@@ -83,9 +83,3 @@ body {
     text-overflow: ellipsis;
     line-height:26px;
 }
-
-#prelimResult {
-    border:1px solid white;
-    width:80px;
-    height:20px;
-}
