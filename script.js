@@ -10,7 +10,6 @@ let i = 0;
 let j = 0;
 let answer = [];
 let initChoice = [''];
-let testStore = [];
 let clickedAnswer = false;
 
 initialize();
@@ -20,7 +19,6 @@ function initialize(){
             if(clickedAnswer === true){
                 result.textContent = '';
                 value[i] = (value[i] || '') + button.textContent;
-                output += testStore[i];
                 result.textContent += button.textContent;
                 clickedAnswer = false;
             }else {
