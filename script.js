@@ -44,16 +44,20 @@ function initialize(){
     })
 
     equalsButton.addEventListener('click', () => {
+        if(value[i] === undefined || value[i-1] === undefined){
+            return;
+        }else{
         operatorCheck();
         result.textContent = parseFloat(answer[j-1]);
         clickedAnswer = true;
+        resetting();
+        }
     })
 
 
 
     deleteButton.addEventListener('click', () => {
         resetting();
-        result.textContent = '';
         result.textContent = '';
     })
 
@@ -63,7 +67,7 @@ function initialize(){
 function operatorCheck() {   
 
      switch(initChoice[i-1]) {
-        case '*':
+        case 'x':
             multiply();
             break;
         case '+':
@@ -72,7 +76,7 @@ function operatorCheck() {
         case '-':
             subtract();
             break;
-        case '/':
+        case '÷':
             divide();
             break;
      }
