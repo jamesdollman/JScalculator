@@ -11,21 +11,25 @@ let j = 0;
 let answer = [];
 let initChoice = [''];
 let clickedAnswer = false;
-
+let error = false;
 initialize();
+
 function initialize() {
   buttons.forEach(button => {
     button.addEventListener("click", () => {
-      if (clickedAnswer === true) {
-        result.textContent = '';
-        value[i] = (value[i] || '') + button.textContent;
-        result.textContent += button.textContent;
-        clickedAnswer = false;
-      } else {
-        value[i] = (value[i] || '') + button.textContent;
-        output += button.textContent;
-        result.textContent += button.textContent;
-      }
+        if(error === true){
+            result.textContent = '';
+        }
+        if (clickedAnswer === true) {
+            result.textContent = '';
+            value[i] = (value[i] || '') + button.textContent;
+            result.textContent += button.textContent;
+            clickedAnswer = false;
+        } else {
+            value[i] = (value[i] || '') + button.textContent;
+            output += button.textContent;
+            result.textContent += button.textContent;
+        }
     });
   });
 
@@ -39,11 +43,12 @@ function initialize() {
         result.textContent = initChoice[i] + ' ';
       }
       if (value[i] === undefined) {
-        result.textContent = '';
+        result.textContent = 'Error';
+        error = true;
       }
       i++;
     });
-  })
+  });
 
   equalsButton.addEventListener('click', () => {
     if (value[i] === undefined || value[i - 1] === undefined) {
@@ -54,7 +59,7 @@ function initialize() {
       clickedAnswer = true;
       resetting();
     }
-  })
+  });
 
   backspaceButton.addEventListener('click', () => {
     if (value[i] !== undefined) {
@@ -108,57 +113,40 @@ function resetting() {
 }
 
 function multiply() {
-  if (value[i] === undefined || value[i - 1] === undefined) {
-    return;
-  } else {
+  if (validityCheck()) {
     if (answer[j - 1] === undefined) {
       answer[j] = value[i - 1] * value[i];
     } else {
       answer[j] = answer[j - 1] * value[i];
     }
-    answer[j] = answer[j].toFixed(3);
-    result.textContent = '';
-    result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
-    j++;
+    displayValue();
   }
 }
 
 function add() {
-  if (value[i] === undefined || value[i - 1] === undefined) {
-    return;
-  } else {
+  if (validityCheck()) {
     if (answer[j - 1] === undefined) {
       answer[j] = parseFloat(value[i - 1]) + parseFloat(value[i]);
     } else {
       answer[j] = parseFloat(answer[j - 1]) + parseFloat(value[i]);
     }
-    answer[j] = answer[j].toFixed(3);
-    result.textContent = '';
-    result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
-    j++;
+    displayValue();
   }
 }
 
 function subtract() {
-  if (value[i] === undefined || value[i - 1] === undefined) {
-    return;
-  } else {
+  if (validityCheck()) {
     if (answer[j - 1] === undefined) {
       answer[j] = parseFloat(value[i - 1]) - parseFloat(value[i]);
     } else {
       answer[j] = parseFloat(answer[j - 1]) - parseFloat(value[i]);
     }
-    answer[j] = answer[j].toFixed(3);
-    result.textContent = '';
-    result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
-    j++;
+    displayValue();
   }
 }
 
 function divide() {
-  if (value[i] === undefined || value[i - 1] === undefined) {
-    return;
-  } else {
+  if (validityCheck()) {
     if (value[i] == 0 || value[i - 1] == 0) {
       value = [];
       return;
@@ -168,10 +156,21 @@ function divide() {
       } else {
         answer[j] = parseFloat(answer[j - 1]) / parseFloat(value[i]);
       }
-      answer[j] = answer[j].toFixed(3);
-      result.textContent = '';
-      result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
-      j++;
+      displayValue();
     }
   }
+}
+
+function validityCheck() {
+  if (value[i] === undefined || value[i - 1] === undefined) {
+    return false;
+  }
+  return true;
+}
+
+function displayValue() {
+  answer[j] = answer[j].toFixed(3);
+  result.textContent = '';
+  result.textContent = parseFloat(answer[j]) + ' ' + initChoice[i] + ' ';
+  j++;
 }
