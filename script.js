@@ -51,9 +51,7 @@ function initialize() {
   });
 
   equalsButton.addEventListener('click', () => {
-    if (value[i] === undefined || value[i - 1] === undefined) {
-      return;
-    } else {
+    if (validityCheck()){
       operatorCheck();
       result.textContent = parseFloat(answer[j - 1]);
       clickedAnswer = true;
